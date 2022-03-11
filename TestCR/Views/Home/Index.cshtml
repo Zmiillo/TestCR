@@ -1,0 +1,89 @@
+﻿@using TestCR.Models
+@model IndexView
+ 
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    * {box-sizing: border-box;}
+    input {
+      width: 60%;
+      background: #c8cbcf;
+      height: 60px;
+      padding-left: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      color: #1d2124;
+    }
+    button {
+      width: 42px;
+      height: 55px;
+      border: none;
+      background: #c8cbcf;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+    button:before {
+      content: "\f002";
+      font-family: FontAwesome;
+      font-size: 16px;
+      color: #F9F0DA;
+    }
+</style>
+<form method="get">
+    <div style="background-color: #c8cbcf;height: 60px">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <table border="0" width="100%">
+                <tr>
+                    <td>
+                        <input type="search" name="name" value="@Model.FilterView.SelectedName" placeholder="Фильтр + поиск">
+                        <button type="submit"></button>
+                    </td>
+                    <td></td>
+                    <td align="right">
+                        <a asp-action="Create" class="btn btn-secondary">Добавить пользователя</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+    </div>
+</form>
+ 
+<table class="table">
+    <tr>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortOrder="@(Model.SortView.LoginSort)"
+               asp-route-name="@(Model.FilterView.SelectedName)"
+               asp-route-company="@(Model.FilterView.SelectedUser)">Логин</a>
+        </th>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortOrder="@(Model.SortView.NameSort)"
+               asp-route-name="@(Model.FilterView.SelectedName)"
+               asp-route-company="@(Model.FilterView.SelectedUser)">Имя</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortView.SurnameSort)"
+               asp-route-name="@(Model.FilterView.SelectedName)"
+               asp-route-company="@(Model.FilterView.SelectedUser)">Фамилия</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortView.EmailSort)"
+               asp-route-name="@(Model.FilterView.SelectedName)"
+               asp-route-company="@(Model.FilterView.SelectedUser)">E-mail</a>
+        </th>
+    </tr>
+    @foreach (User u in Model.Users)
+    {
+        <tr>
+            <td style="vertical-align: middle;vert-align: middle"><a asp-action="Edit" asp-controller="Home" asp-route-id="@u.Id" class="btn btn-link">@u.Login</a></td>
+            <td style="vertical-align: middle;vert-align: middle">@u.Name</td>
+            <td style="vertical-align: middle;vert-align: middle">@u.Surname</td>
+            <td style="vertical-align: middle;vert-align: middle">@u.Email</td>
+            <td style="vertical-align: middle;vert-align: middle"><a asp-action="Index" asp-route-deleteid="@u.Id"><i class="fa fa-trash fa-lg"></i></a></td>
+
+        </tr>
+    }
+</table>
